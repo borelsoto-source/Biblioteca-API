@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_livro")
@@ -20,8 +22,11 @@ public class Livro {
     @Column(name = "data_lancamento")
     private LocalDate dataLancamento;
 
-    @Enumerated(EnumType.STRING)
-    private GeneroLivro genero;
+    @ManyToMany
+    @JoinTable(name= "genero_livro",
+            joinColumns = @JoinColumn(name= "id_livro"),
+            inverseJoinColumns = @JoinColumn(name= "id_genero"))
+    private Set<GeneroLivro> genero;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_autor")

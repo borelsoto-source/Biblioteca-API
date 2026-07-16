@@ -16,9 +16,9 @@ public class AutorRepositoryTest {
     @Test
     void salvarAutor(){
         Autor autor = new Autor();
-        autor.setNome("Gabriel Garcia Marques");
-        autor.setNacionalidade("Colombiana");
-        autor.setDataNascimento(LocalDate.of(1927, 3, 6));
+        autor.setNome("Rafael Montes");
+        autor.setNacionalidade("Brasileira");
+        autor.setDataNascimento(LocalDate.of(1990, 9, 22));
 
         repository.save(autor);
     }
