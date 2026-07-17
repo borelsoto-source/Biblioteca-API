@@ -1,15 +1,20 @@
 package com.bibliotecaapi.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_livro")
-@Data
 public class Livro {
 
     @Id
@@ -23,12 +28,20 @@ public class Livro {
     private LocalDate dataLancamento;
 
     @ManyToMany
-    @JoinTable(name= "genero_livro",
+    @JoinTable(
+            name= "genero_livro",
             joinColumns = @JoinColumn(name= "id_livro"),
-            inverseJoinColumns = @JoinColumn(name= "id_genero"))
-    private Set<GeneroLivro> genero;
+            inverseJoinColumns = @JoinColumn(name= "id_genero")
+    )
+    private Set<Genero> generos = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_autor")
     private Autor autor;
+
+    @Enumerated(EnumType.STRING)
+    private StatusLivro status;
+
+    @OneToMany(mappedBy = "livro")
+    private List<Emprestimo> emprestimos = new ArrayList<>();
 }
