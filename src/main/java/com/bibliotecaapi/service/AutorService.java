@@ -5,7 +5,6 @@ import com.bibliotecaapi.repository.AutorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AutorService {
@@ -16,8 +15,7 @@ public class AutorService {
     }
 
     public Autor salvar(Autor autor){
-        autorRepository.save(autor);
-        return autor;
+        return autorRepository.save(autor);
     }
 
     public List<Autor> buscarTodos(){
@@ -25,33 +23,43 @@ public class AutorService {
     }
 
     public Autor buscarPorId(Long id){
-        return autorRepository.findById(id).orElse(null);
+        Autor autorEncontrado = autorRepository.findById(id).orElse(null);
+        if(autorEncontrado != null) {
+            return autorEncontrado;
+        }else{
+            throw new RuntimeException("Autor nao encontrado");
+        }
     }
 
     public List<Autor> buscarPorNome(String nome){
         return autorRepository.findByNomeContainingIgnoreCase(nome);
     }
 
-    public Autor deletarPorId(Long id){
-        Optional<Autor> autor_encontrado = autorRepository.findById(id);
-        if(autor_encontrado.isPresent()){
-            autorRepository.delete(autor_encontrado.get());
-        }else{
-            throw new RuntimeException ("Id nao encontrado");
+    public void deletarPorId(Long id){
+        Autor autorEncontrado = autorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Autor nao encontrado"));
+
+            validarExclusao(autorEncontrado);
+            autorRepository.delete(autorEncontrado);
+    }
+
+    public void validarExclusao(Autor autor){
+        if(!autor.getLivros().isEmpty()){
+            throw new RuntimeException("Autor não pode ser excluído pois possui livros cadastrados");
         }
-        return autor_encontrado.get();
     }
 
     public Autor atualizar(Long id, Autor autor){
-        Autor entity = autorRepository.getReferenceById(id);
-        atualizarDados(entity,autor);
-        return autorRepository.save(entity);
+        Autor entity = autorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Autor nao encontrado"));
+
+            atualizarDados(entity,autor);
+            return autorRepository.save(entity);
     }
 
-    public void atualizarDados(Autor autor, Autor obj){
-        autor.setNome(obj.getNome());
-        autor.setNacionalidade(obj.getNacionalidade());
-        autor.setDataNascimento(obj.getDataNascimento());
-        autor.setLivros(obj.getLivros());
+    public void atualizarDados(Autor autor, Autor autorAtualizado){
+        autor.setNome(autorAtualizado.getNome());
+        autor.setNacionalidade(autorAtualizado.getNacionalidade());
+        autor.setDataNascimento(autorAtualizado.getDataNascimento());
     }
 }
