@@ -31,7 +31,7 @@ public class EmprestimoRepositoryTest {
         Usuario usuario = usuarioRepository.findById(2L)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
 
-        Livro livro = livroRepository.findById(2L)
+        Livro livro = livroRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Livro nao encontrado"));
 
         if(livro.getStatus() == StatusLivro.INATIVO
@@ -55,6 +55,7 @@ public class EmprestimoRepositoryTest {
         Emprestimo emprestimo = repository.findById(1L).orElse(null);
         emprestimo.setDataDevolucao(LocalDate.now().plusDays(10));
         emprestimo.setStatus(StatusEmprestimo.DEVOLVIDO);
+        //emprestimo.setLivro(livroRepository.findById(1L).orElse(null));
 
         repository.save(emprestimo);
     }

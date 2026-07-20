@@ -31,6 +31,6 @@ public class Emprestimo {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name= "livro")
+    @JoinColumn(name= "id_livro")
     private Livro livro;
 }

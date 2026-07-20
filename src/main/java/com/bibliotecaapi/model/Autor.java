@@ -1,9 +1,11 @@
 package com.bibliotecaapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,8 +24,8 @@ public class Autor {
     private String nacionalidade;
     private LocalDate dataNascimento;
 
-    @OneToMany
-    @Transient
-    private List<Livro> livros;
+    @OneToMany(mappedBy = "autor")
+    @JsonIgnore
+    private List<Livro> livros = new ArrayList<>();
 
 }
