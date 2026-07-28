@@ -14,8 +14,8 @@ public class GeneroRepositoryTest {
     @Test
     void salvarGenero(){
         Genero genero = new Genero();
-        genero.setNome("ROMANCE");
-        genero.setDescricao("Narrativas longas sobre relações humanas e tramas complexas.");
+        genero.setNome("COMEDIA CRONICA");
+        genero.setDescricao("Foca em mal-entendidos e desventuras do dia a dia.");
 
         repository.save(genero);
     }

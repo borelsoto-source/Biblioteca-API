@@ -1,5 +1,6 @@
 package com.bibliotecaapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,10 +28,12 @@ public class Emprestimo {
     private StatusEmprestimo status;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name= "id_usuario")
     private Usuario usuario;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name= "id_livro")
     private Livro livro;
 }

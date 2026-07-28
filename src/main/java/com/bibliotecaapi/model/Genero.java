@@ -1,5 +1,6 @@
 package com.bibliotecaapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,7 @@ public class Genero {
     private String nome;
     private String descricao;
 
-//    @ToString.Exclude
+    @JsonIgnore
     @ManyToMany(mappedBy = "generos")
     private Set<Livro> livro = new HashSet<>();
 }

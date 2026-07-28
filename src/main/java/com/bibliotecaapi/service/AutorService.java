@@ -23,12 +23,8 @@ public class AutorService {
     }
 
     public Autor buscarPorId(Long id){
-        Autor autorEncontrado = autorRepository.findById(id).orElse(null);
-        if(autorEncontrado != null) {
-            return autorEncontrado;
-        }else{
-            throw new RuntimeException("Autor nao encontrado");
-        }
+       return autorRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Autor nao encontrado com o id: " + id));
     }
 
     public List<Autor> buscarPorNome(String nome){
@@ -37,7 +33,7 @@ public class AutorService {
 
     public void deletarPorId(Long id){
         Autor autorEncontrado = autorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Autor nao encontrado"));
+                .orElseThrow(() -> new RuntimeException("Autor nao encontrado com o id: " + id));
 
             validarExclusao(autorEncontrado);
             autorRepository.delete(autorEncontrado);
@@ -51,7 +47,7 @@ public class AutorService {
 
     public Autor atualizar(Long id, Autor autor){
         Autor entity = autorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Autor nao encontrado"));
+                .orElseThrow(() -> new RuntimeException("Autor nao encontrado com o id: " + id));
 
             atualizarDados(entity,autor);
             return autorRepository.save(entity);
