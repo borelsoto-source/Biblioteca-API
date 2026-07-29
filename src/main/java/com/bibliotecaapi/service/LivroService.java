@@ -92,8 +92,7 @@ public class LivroService {
 
 
     public Livro atualizar(Long id, Livro livro) {
-        Livro entity = livroRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Livro nao encontrado para o id "+id));
+        Livro entity = buscarPorId(id);
 
         Autor autorEncontrado = autorService.buscarPorId(livro.getAutor().getId());
         livro.setAutor(autorEncontrado);
