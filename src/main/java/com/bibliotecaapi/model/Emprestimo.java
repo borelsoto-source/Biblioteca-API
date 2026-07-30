@@ -28,12 +28,10 @@ public class Emprestimo {
     private StatusEmprestimo status;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name= "id_usuario")
     private Usuario usuario;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name= "id_livro")
     private Livro livro;
 }

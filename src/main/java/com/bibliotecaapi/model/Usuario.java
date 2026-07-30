@@ -1,5 +1,6 @@
 package com.bibliotecaapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public class Usuario {
     private LocalDateTime dataCadastro;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private List<Emprestimo> emprestimos = new ArrayList<>();
 
 }

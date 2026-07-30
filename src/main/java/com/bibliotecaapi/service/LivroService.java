@@ -110,6 +110,13 @@ public class LivroService {
         banco.setDataLancamento(livroAtualizado.getDataLancamento());
         banco.setGeneros(livroAtualizado.getGeneros());
         banco.setAutor(livroAtualizado.getAutor());
+        banco.setStatus(livroAtualizado.getStatus());
+    }
+
+    public void atualizarStatus(Long id, StatusLivro novoStatus) {
+        Livro livroEncontrado = buscarPorId(id);
+        livroEncontrado.setStatus(novoStatus);
+        livroRepository.save(livroEncontrado);
     }
 
     public void inativar(Long id){
@@ -124,6 +131,12 @@ public class LivroService {
     public void validarInativacao(Livro livro){
         if(livro.getStatus().equals(StatusLivro.EMPRESTADO)){
             throw new RuntimeException("Livro nao pode ser inativado pois seu status é EMPRESTADO");
+        }
+    }
+
+    public void validarDisponibilidade(Livro livro){
+        if(livro.getStatus() != StatusLivro.DISPONIVEL){
+            throw new RuntimeException("Livro nao disponivel, status atual "+livro.getStatus());
         }
     }
 }
